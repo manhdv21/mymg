@@ -27,10 +27,10 @@ No build step, backend, package install, or local server is required.
 3. A canvas resizes the image using the selected max width, max height, and quality.
 4. The canvas output is converted to a compressed `Blob`.
 5. The blob is encoded into a Base64URL string.
-6. The generated URL points to `viewer.html` with hash data:
+6. The generated URL points to the GitHub Pages viewer with hash data:
 
 ```text
-viewer.html#img=<encoded-data>&type=image/webp
+https://manhdv21.github.io/mymg/viewer.html#img=<encoded-data>&type=image/webp
 ```
 
 7. `viewer.html` decodes the hash, creates a `Blob`, and renders the image with `URL.createObjectURL`.

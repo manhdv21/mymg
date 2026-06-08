@@ -1,6 +1,7 @@
 "use strict";
 
 const pageType = document.body.dataset.page;
+const SHARE_BASE_URL = "https://manhdv21.github.io/mymg/";
 
 const state = {
   file: null,
@@ -169,7 +170,7 @@ function updateLengthWarning(url) {
 }
 
 function buildViewerUrl(encoded, type) {
-  const viewerUrl = new URL("viewer.html", window.location.href);
+  const viewerUrl = new URL("viewer.html", SHARE_BASE_URL);
   viewerUrl.hash = `img=${encoded}&type=${type}`;
   return viewerUrl.href;
 }
