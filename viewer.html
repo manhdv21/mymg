@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Shared Image Viewer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body data-page="viewer" class="min-h-screen bg-slate-950 text-white">
+    <main class="grid min-h-screen place-items-center p-4">
+      <section class="w-full">
+        <div id="message" class="mb-4 hidden rounded-lg border border-red-400/40 bg-red-500/15 p-4 font-bold text-red-100"></div>
+
+        <div id="viewerFrame" class="grid min-h-[90vh] place-items-center overflow-hidden">
+          <img id="decodedPreview" class="hidden max-h-[94vh] max-w-full object-contain" alt="Image decoded from URL hash">
+          <p id="decodedEmpty" class="text-center text-slate-300">No image data found in this viewer URL.</p>
+        </div>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
