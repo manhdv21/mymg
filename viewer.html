@@ -6,18 +6,24 @@
     <title>Shared Image Viewer</title>
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
-  <body data-page="viewer" class="min-h-screen bg-slate-950 text-white">
-    <main class="grid min-h-screen place-items-center p-4">
+  <body data-page="viewer" class="min-h-screen bg-slate-950 text-white antialiased">
+    <div aria-hidden="true" class="pointer-events-none fixed inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(16,185,129,0.20),transparent_34%),linear-gradient(180deg,rgba(15,23,42,0),rgba(2,6,23,0.78))]"></div>
+    <main class="relative grid min-h-screen place-items-center p-4">
       <section class="w-full">
-        <div id="message" class="mb-4 hidden rounded-lg border border-red-400/40 bg-red-500/15 p-4 font-bold text-red-100"></div>
+        <div id="message" class="mx-auto mb-4 hidden max-w-3xl rounded-lg border border-red-400/40 bg-red-500/15 p-4 font-bold text-red-100 shadow-2xl shadow-red-950/20"></div>
 
-        <div id="viewerFrame" class="grid min-h-[90vh] place-items-center overflow-hidden">
-          <img id="decodedPreview" class="hidden max-h-[94vh] max-w-full object-contain" alt="Image decoded from URL hash">
+        <div id="viewerFrame" class="grid min-h-[90vh] place-items-center overflow-hidden rounded-lg border border-white/10 bg-white/[0.03] p-4 shadow-2xl shadow-black/30 backdrop-blur">
+          <img id="decodedPreview" class="hidden max-h-[88vh] max-w-full rounded-lg object-contain shadow-2xl shadow-black/40" alt="Image decoded from URL hash">
           <p id="decodedEmpty" class="text-center text-slate-300">No image data found in this viewer URL.</p>
         </div>
       </section>
     </main>
 
+    <script src="js/config.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/cropper.js"></script>
+    <script src="js/generator.js"></script>
+    <script src="js/viewer.js"></script>
     <script src="script.js"></script>
   </body>
 </html>
