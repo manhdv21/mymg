@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /viewer.html
+
+Sitemap: https://manhdv21.github.io/mymg/sitemap.xml

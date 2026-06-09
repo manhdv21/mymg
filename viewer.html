@@ -3,7 +3,28 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Shared Image Viewer</title>
+    <title>Shared Image Viewer - Image Hash Share</title>
+    <meta
+      name="description"
+      content="Viewer-only page for images encoded into Image Hash Share URL hashes."
+    >
+    <meta name="robots" content="noindex,nofollow">
+    <meta name="theme-color" content="#020617">
+    <link rel="canonical" href="https://manhdv21.github.io/mymg/viewer.html">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Image Hash Share">
+    <meta property="og:title" content="Shared Image Viewer - Image Hash Share">
+    <meta
+      property="og:description"
+      content="A viewer-only route for image data stored in a URL hash."
+    >
+    <meta property="og:url" content="https://manhdv21.github.io/mymg/viewer.html">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Shared Image Viewer - Image Hash Share">
+    <meta
+      name="twitter:description"
+      content="Open a shared Image Hash Share URL to decode and view the image from the hash."
+    >
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
   <body data-page="viewer" class="min-h-screen bg-slate-950 text-white antialiased">
@@ -16,6 +37,11 @@
           <img id="decodedPreview" class="hidden max-h-[88vh] max-w-full rounded-lg object-contain shadow-2xl shadow-black/40" alt="Image decoded from URL hash">
           <p id="decodedEmpty" class="text-center text-slate-300">No image data found in this viewer URL.</p>
         </div>
+        <noscript>
+          <p class="mt-4 text-center text-slate-300">
+            Enable JavaScript to decode and view the image stored in this URL hash.
+          </p>
+        </noscript>
       </section>
     </main>
 

@@ -3,7 +3,65 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Image Hash Share</title>
+    <title>Image Hash Share - Browser Image Compressor and URL Hash Viewer</title>
+    <meta
+      name="description"
+      content="Compress, crop, paste, drag and drop tiny images in your browser, encode them as Base64URL, and create viewer-only share links with image data stored in the URL hash."
+    />
+    <meta
+      name="keywords"
+      content="image to URL, Base64URL image, browser image compressor, image hash share, client-side image compression, tiny image sharing"
+    />
+    <meta name="author" content="Manh Do" />
+    <meta name="robots" content="index,follow" />
+    <meta name="theme-color" content="#047857" />
+    <meta name="application-name" content="Image Hash Share" />
+    <link rel="canonical" href="https://manhdv21.github.io/mymg/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Image Hash Share" />
+    <meta
+      property="og:title"
+      content="Image Hash Share - Browser Image Compressor and URL Hash Viewer"
+    />
+    <meta
+      property="og:description"
+      content="A frontend-only tool for cropping and compressing tiny images locally, then sharing them as URL hash data."
+    />
+    <meta property="og:url" content="https://manhdv21.github.io/mymg/" />
+    <meta name="twitter:card" content="summary" />
+    <meta
+      name="twitter:title"
+      content="Image Hash Share - Browser Image Compressor and URL Hash Viewer"
+    />
+    <meta
+      name="twitter:description"
+      content="Crop, compress, encode, and share tiny images directly through a URL hash without uploading to a server."
+    />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Image Hash Share",
+        "url": "https://manhdv21.github.io/mymg/",
+        "applicationCategory": "MultimediaApplication",
+        "operatingSystem": "Any",
+        "description": "A frontend-only browser app for cropping, compressing, Base64URL encoding, and sharing tiny images through URL hash data.",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        },
+        "featureList": [
+          "Client-side image upload",
+          "Drag and drop image upload",
+          "Clipboard image paste",
+          "Canvas crop and resize",
+          "JPEG and WebP compression",
+          "Base64URL hash sharing",
+          "Viewer-only image route"
+        ]
+      }
+    </script>
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
   <body
@@ -50,6 +108,15 @@
         id="message"
         class="mb-5 hidden rounded-lg border border-red-200 bg-red-50 p-4 font-bold text-red-800 shadow-sm"
       ></section>
+
+      <noscript>
+        <section
+          class="mb-5 rounded-lg border border-slate-200 bg-white p-4 text-sm leading-6 text-slate-700 shadow-sm"
+        >
+          Image Hash Share is a browser-only image utility. Enable JavaScript to crop, compress,
+          encode, and generate viewer-only image URLs.
+        </section>
+      </noscript>
 
       <div class="grid gap-5 lg:grid-cols-2">
         <section

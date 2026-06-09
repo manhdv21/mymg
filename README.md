@@ -14,6 +14,8 @@ The app lets you upload, drag and drop, or paste an image, crop it with a mouse 
 - `js/cropper.js` - crop canvas drawing and border/handle drag behavior.
 - `js/generator.js` - upload, drag/drop, paste, compression, and final URL generation.
 - `js/viewer.js` - hash decode and viewer-only image rendering.
+- `robots.txt` - search crawler rules that index the main app and avoid indexing hash viewer URLs.
+- `sitemap.xml` - sitemap entry for the public GitHub Pages app URL.
 
 ## Run
 
