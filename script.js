@@ -1,9 +1,16 @@
 'use strict';
 
-const pageType = document.body.dataset.page;
+(async function bootstrap() {
+  window.AppSnowDecor?.init();
 
-if (pageType === 'generator') {
-  window.AppGenerator.init();
-} else if (pageType === 'viewer') {
-  window.AppViewer.init();
-}
+  await window.AppConfig.loadEnv();
+  window.AppConfig.applyDomainToDocument();
+
+  const pageType = document.body.dataset.page;
+
+  if (pageType === 'generator') {
+    window.AppGenerator.init();
+  } else if (pageType === 'viewer') {
+    window.AppViewer.init();
+  }
+})();

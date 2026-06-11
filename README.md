@@ -38,7 +38,7 @@ No build step, backend, package install, or local server is required.
 7. The generated URL points to the GitHub Pages viewer with hash data:
 
 ```text
-https://manhdv21.github.io/mymg/viewer.html#img=<encoded-data>&type=image/webp
+${APP_DOMAIN}/viewer.html#img=<encoded-data>&type=image/webp
 ```
 
 8. `viewer.html` decodes the hash, creates a `Blob`, and renders the image with `URL.createObjectURL`.

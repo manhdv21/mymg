@@ -10,7 +10,7 @@
     >
     <meta name="robots" content="noindex,nofollow">
     <meta name="theme-color" content="#020617">
-    <link rel="canonical" href="https://manhdv21.github.io/mymg/viewer.html">
+    <link rel="canonical" href="">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="Image Hash Share">
     <meta property="og:title" content="Shared Image Viewer - Image Hash Share">
@@ -18,7 +18,7 @@
       property="og:description"
       content="A viewer-only route for image data stored in a URL hash."
     >
-    <meta property="og:url" content="https://manhdv21.github.io/mymg/viewer.html">
+    <meta property="og:url" content="">
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="Shared Image Viewer - Image Hash Share">
     <meta
@@ -28,8 +28,13 @@
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
   <body data-page="viewer" class="min-h-screen bg-slate-950 text-white antialiased">
-    <div aria-hidden="true" class="pointer-events-none fixed inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(16,185,129,0.20),transparent_34%),linear-gradient(180deg,rgba(15,23,42,0),rgba(2,6,23,0.78))]"></div>
-    <main class="relative grid min-h-screen place-items-center p-4">
+    <canvas
+      id="snowDecorCanvas"
+      class="pointer-events-none fixed inset-0 z-20 opacity-90"
+      aria-hidden="true"
+    ></canvas>
+    <div aria-hidden="true" class="pointer-events-none fixed inset-0 z-0 bg-[radial-gradient(circle_at_50%_0%,rgba(16,185,129,0.20),transparent_34%),linear-gradient(180deg,rgba(15,23,42,0),rgba(2,6,23,0.78))]"></div>
+    <main class="relative z-10 grid min-h-screen place-items-center p-4">
       <section class="w-full">
         <div id="message" class="mx-auto mb-4 hidden max-w-3xl rounded-lg border border-red-400/40 bg-red-500/15 p-4 font-bold text-red-100 shadow-2xl shadow-red-950/20"></div>
 
@@ -50,6 +55,7 @@
     <script src="js/cropper.js"></script>
     <script src="js/generator.js"></script>
     <script src="js/viewer.js"></script>
+    <script src="js/snow-decor.js"></script>
     <script src="script.js"></script>
   </body>
 </html>

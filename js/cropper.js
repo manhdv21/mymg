@@ -237,9 +237,11 @@ window.AppCropper = function createCropper(options) {
     const { edges } = drag.hit;
 
     if (edges.left) left = Math.min(Math.max(0, point.x), right - minSize);
-    if (edges.right) right = Math.max(Math.min(getSourceImage().naturalWidth, point.x), left + minSize);
+    if (edges.right)
+      right = Math.max(Math.min(getSourceImage().naturalWidth, point.x), left + minSize);
     if (edges.top) top = Math.min(Math.max(0, point.y), bottom - minSize);
-    if (edges.bottom) bottom = Math.max(Math.min(getSourceImage().naturalHeight, point.y), top + minSize);
+    if (edges.bottom)
+      bottom = Math.max(Math.min(getSourceImage().naturalHeight, point.y), top + minSize);
 
     return clampRect({ x: left, y: top, w: right - left, h: bottom - top });
   }

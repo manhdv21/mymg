@@ -110,6 +110,6 @@ window.AppUtils = {
   },
 
   buildViewerUrl(encoded, type) {
-    return `${window.AppConfig.shareBaseUrl}viewer.html#img=${encoded}&type=${type}`;
+    return `${window.AppConfig.getShareBaseUrl()}viewer.html#img=${encoded}&type=${type}`;
   },
 };
