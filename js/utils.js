@@ -1,5 +1,13 @@
 'use strict';
 
+const MESSAGE_VARIANTS = Object.freeze({
+  error: ['border-red-200', 'bg-red-50', 'text-red-800'],
+  success: ['border-emerald-200', 'bg-emerald-50', 'text-emerald-800'],
+  warning: ['border-amber-200', 'bg-amber-50', 'text-amber-800'],
+});
+const MESSAGE_VARIANT_CLASSES = [...new Set(Object.values(MESSAGE_VARIANTS).flat())];
+const messageTimers = new WeakMap();
+
 window.AppUtils = {
   formatBytes(bytes) {
     if (!Number.isFinite(bytes) || bytes < 0) return '--';
@@ -17,10 +25,30 @@ window.AppUtils = {
     return `${value.toFixed(value >= 10 ? 1 : 2)} ${units[unitIndex]}`;
   },
 
-  setMessage(element, text) {
+  setMessage(element, text, { autoHideMs = 0, variant = 'error' } = {}) {
     if (!element) return;
+
+    const previousTimer = messageTimers.get(element);
+    if (previousTimer !== undefined) {
+      window.clearTimeout(previousTimer);
+      messageTimers.delete(element);
+    }
+
+    element.classList.remove(...MESSAGE_VARIANT_CLASSES);
+    element.classList.add(...(MESSAGE_VARIANTS[variant] || MESSAGE_VARIANTS.error));
     element.textContent = text;
     element.classList.toggle('hidden', !text);
+
+    if (!text || !Number.isFinite(autoHideMs) || autoHideMs <= 0 || typeof window.setTimeout !== 'function') {
+      return;
+    }
+
+    const timer = window.setTimeout(() => {
+      element.textContent = '';
+      element.classList.add('hidden');
+      messageTimers.delete(element);
+    }, autoHideMs);
+    messageTimers.set(element, timer);
   },
 
   setMeta(list, values) {
@@ -63,19 +91,32 @@ window.AppUtils = {
   },
 
   canvasToBlob(canvas, type, quality) {
+    const requestedType = String(type || '').toLowerCase();
+
     return new Promise((resolve, reject) => {
       canvas.toBlob(
         (blob) => {
-          if (blob) {
-            resolve(blob);
+          if (!blob) {
+            reject(new Error('The browser could not create a compressed image.'));
             return;
           }
-          reject(new Error('The browser could not create a compressed image.'));
+
+          const actualType = String(blob.type || '').toLowerCase();
+          if (requestedType && actualType !== requestedType) {
+            reject(new Error(`${requestedType} is not supported by this browser.`));
+            return;
+          }
+
+          resolve(blob);
         },
         type,
         quality,
       );
     });
+  },
+
+  canvasToWebpBlob(canvas, quality) {
+    return this.canvasToBlob(canvas, 'image/webp', quality);
   },
 
   blobToBase64Url(blob) {
@@ -109,7 +150,15 @@ window.AppUtils = {
     return bytes;
   },
 
+  buildShareUrl(encoded, type) {
+    return this.buildViewerUrl(encoded, type);
+  },
+
   buildViewerUrl(encoded, type) {
-    return `${window.AppConfig.getShareBaseUrl()}viewer.html#img=${encoded}&type=${type}`;
+    const viewerUrl = new URL('viewer.html', window.location.href);
+    viewerUrl.search = '';
+    viewerUrl.hash = `img=${encoded}&type=${type}`;
+
+    return viewerUrl.href;
   },
 };

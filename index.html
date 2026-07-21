@@ -1,352 +1,220 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Image Hash Share - Browser Image Compressor and URL Hash Viewer</title>
-    <meta
-      name="description"
-      content="Compress, crop, paste, drag and drop tiny images in your browser, encode them as Base64URL, and create viewer-only share links with image data stored in the URL hash."
-    />
-    <meta
-      name="keywords"
-      content="image to URL, Base64URL image, browser image compressor, image hash share, client-side image compression, tiny image sharing"
-    />
-    <meta name="author" content="Manh Do" />
-    <meta name="robots" content="index,follow" />
-    <meta name="theme-color" content="#047857" />
-    <meta name="application-name" content="Image Hash Share" />
-    <link rel="canonical" href="" />
-    <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="Image Hash Share" />
-    <meta
-      property="og:title"
-      content="Image Hash Share - Browser Image Compressor and URL Hash Viewer"
-    />
-    <meta
-      property="og:description"
-      content="A frontend-only tool for cropping and compressing tiny images locally, then sharing them as URL hash data."
-    />
-    <meta property="og:url" content="" />
-    <meta name="twitter:card" content="summary" />
-    <meta
-      name="twitter:title"
-      content="Image Hash Share - Browser Image Compressor and URL Hash Viewer"
-    />
-    <meta
-      name="twitter:description"
-      content="Crop, compress, encode, and share tiny images directly through a URL hash without uploading to a server."
-    />
-    <script id="appStructuredData" type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "WebApplication",
-        "name": "Image Hash Share",
-        "url": "",
-        "applicationCategory": "MultimediaApplication",
-        "operatingSystem": "Any",
-        "description": "A frontend-only browser app for cropping, compressing, Base64URL encoding, and sharing tiny images through URL hash data.",
-        "offers": {
-          "@type": "Offer",
-          "price": "0",
-          "priceCurrency": "USD"
-        },
-        "featureList": [
-          "Client-side image upload",
-          "Drag and drop image upload",
-          "Clipboard image paste",
-          "Canvas crop and resize",
-          "JPEG and WebP compression",
-          "Base64URL hash sharing",
-          "Viewer-only image route"
-        ]
-      }
-    </script>
-    <script src="https://cdn.tailwindcss.com"></script>
-  </head>
-  <body
-    data-page="generator"
-    class="min-h-screen overflow-x-hidden bg-[#f7fbfc] text-slate-950 antialiased"
-  >
-    <main class="relative z-10 mx-auto w-full max-w-[1180px] px-4 py-8 md:py-10">
-      <header
-        class="relative mb-6 min-h-[250px] overflow-hidden rounded-lg border border-slate-200/80 bg-white/20 shadow-2xl shadow-slate-900/5 backdrop-blur-[1px] md:min-h-[230px] fixed inset-x-0 top-0 z-0 h-72 bg-[linear-gradient(135deg,rgba(16,185,129,0.18),rgba(6,182,212,0.12)_42%,rgba(255,255,255,0)_74%)]"
-      >
-        <canvas
-          id="snowDecorCanvas"
-          class="pointer-events-none absolute inset-0 z-0 block h-full w-full opacity-80"
-          aria-hidden="true"
-        ></canvas>
-        <div class="sr-only">
-          <h1>Image Hash Share</h1>
-          <p>
-            Compress a tiny image in the browser and create a polished viewer-only URL with the
-            image data tucked into the hash.
-          </p>
-        </div>
-        <button
-          id="clearButton"
-          type="button"
-          class="absolute right-5 top-5 z-10 h-11 rounded-lg border border-slate-300/80 bg-white/90 px-5 text-sm font-extrabold text-slate-800 shadow-sm transition hover:-translate-y-0.5 hover:border-slate-400 hover:bg-white hover:shadow-md"
-        >
-          Clear
-        </button>
-      </header>
 
-      <section
-        class="mb-5 rounded-lg border border-amber-200 bg-amber-50/90 p-4 text-sm leading-6 text-slate-800 shadow-sm"
-      >
-        <strong>URL data is fragile.</strong>
-        Browser, chat, email, and social platforms all have practical URL length limits. This
-        experiment is only suitable for tiny images or thumbnails, not normal photos.
-      </section>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Image Hash Share - Browser Image Compressor and URL Hash Viewer</title>
+  <meta name="description"
+    content="Compress, crop, and drag and drop tiny images in your browser, encode them as Base64URL, and create viewer share links." />
+  <meta name="keywords"
+    content="image to URL, Base64URL image, browser image compressor, image hash share, client-side image compression, tiny image sharing" />
+  <meta name="author" content="Manh Do" />
+  <meta name="robots" content="index,follow" />
+  <meta name="theme-color" content="#047857" />
+  <meta name="application-name" content="Image Hash Share" />
+  <link rel="canonical" href="" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Image Hash Share" />
+  <meta property="og:title" content="Image Hash Share - Browser Image Compressor and URL Hash Viewer" />
+  <meta property="og:description"
+    content="A frontend-only tool for cropping and compressing tiny images locally, then sharing them as URL hash data." />
+  <meta property="og:url" content="" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Image Hash Share - Browser Image Compressor and URL Hash Viewer" />
+  <meta name="twitter:description"
+    content="Crop, compress, encode, and share tiny images directly through a URL hash without uploading to a server." />
+  <script id="appStructuredData" type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Image Hash Share",
+      "url": "",
+      "applicationCategory": "MultimediaApplication",
+      "operatingSystem": "Any",
+      "description": "A frontend-only browser app for cropping, compressing, Base64URL encoding, and sharing tiny images through URL hash data.",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "featureList": [
+        "Client-side image upload",
+        "Drag and drop image upload",
+        "Canvas crop and resize",
+        "Native WebP compression",
+        "Base64URL hash sharing",
+        "Viewer-only image share links"
+      ]
+    }
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <style>
+    .app-notification {
+      position: fixed;
+      right: 1rem;
+      bottom: 1rem;
+      z-index: 50;
+      width: min(calc(100vw - 2rem), 32rem);
+      margin: 0;
+    }
+  </style>
+</head>
 
-      <section
-        id="message"
-        class="mb-5 hidden rounded-lg border border-red-200 bg-red-50 p-4 font-bold text-red-800 shadow-sm"
-      ></section>
+<body data-page="generator"
+  class="min-h-screen overflow-x-hidden bg-[#f7fbfc] text-slate-950 antialiased lg:h-[100dvh] lg:overflow-hidden">
+  <main id="generatorPage"
+    class="relative z-10 mx-auto w-full max-w-[1280px] px-4 md:px-10 py-4 lg:flex lg:h-[100dvh] lg:min-h-0 lg:flex-col lg:overflow-hidden">
+    <header
+      class="relative inset-x-0 top-0 z-0 mb-4 h-40 min-h-[140px] overflow-hidden rounded-lg border border-slate-200/80 bg-white/20 bg-[linear-gradient(135deg,rgba(16,185,129,0.18),rgba(6,182,212,0.12)_42%,rgba(255,255,255,0)_74%)] shadow-2xl shadow-slate-900/5 backdrop-blur-[1px] md:h-44 md:min-h-[160px]">
+      <canvas id="snowDecorCanvas" class="pointer-events-none absolute inset-0 z-0 block h-full w-full opacity-80"
+        aria-hidden="true"></canvas>
 
-      <noscript>
-        <section
-          class="mb-5 rounded-lg border border-slate-200 bg-white p-4 text-sm leading-6 text-slate-700 shadow-sm"
-        >
-          Image Hash Share is a browser-only image utility. Enable JavaScript to crop, compress,
-          encode, and generate viewer-only image URLs.
-        </section>
-      </noscript>
-
-      <div class="grid gap-5 lg:grid-cols-2">
-        <section
-          class="rounded-lg border border-slate-200/80 bg-white/95 p-5 shadow-2xl shadow-slate-900/8 backdrop-blur"
-        >
-          <h2 class="mb-4 flex items-center gap-3 text-xl font-extrabold">
-            <span
-              class="grid size-9 place-items-center rounded-lg bg-emerald-800 text-sm text-white"
-              >1</span
-            >Upload
-          </h2>
-          <div
-            id="dropZone"
-            class="mb-5 rounded-lg border border-dashed border-emerald-300 bg-emerald-50/50 p-3 transition"
-          >
-            <div class="grid gap-3 sm:grid-cols-2">
-              <label
-                class="group flex min-h-28 cursor-pointer flex-col items-center justify-center gap-2 rounded-lg border border-dashed border-emerald-300 bg-emerald-50/70 px-4 text-center font-extrabold text-emerald-900 transition hover:-translate-y-0.5 hover:border-emerald-500 hover:bg-emerald-50"
-              >
-                <span class="grid size-10 place-items-center rounded-lg bg-white text-xl shadow-sm"
-                  >+</span
-                >
-                <span>Select or drop image</span>
-                <input id="fileInput" class="sr-only" type="file" accept="image/*" />
-              </label>
-              <button
-                id="pasteButton"
-                class="min-h-28 rounded-lg border border-slate-300 bg-white px-4 text-center font-extrabold text-slate-800 shadow-sm transition hover:-translate-y-0.5 hover:border-cyan-400 hover:bg-cyan-50/60 hover:text-cyan-900"
-                type="button"
-              >
-                Paste image
-              </button>
-            </div>
-            <p class="mt-3 text-center text-sm font-semibold text-emerald-900">
-              Drag and drop an image anywhere in this upload area.
-            </p>
-          </div>
-
-          <div>
-            <div class="mb-2 flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
-              <h3 class="text-sm font-extrabold uppercase text-slate-500">
-                Original Preview and Crop
-              </h3>
-              <p id="cropHint" class="text-sm text-slate-500">
-                Drag a border or corner to resize; drag inside to move.
-              </p>
-            </div>
-            <div
-              class="grid min-h-72 place-items-center overflow-hidden rounded-lg border border-slate-200 bg-[length:22px_22px] bg-[position:0_0,0_11px,11px_-11px,-11px_0] p-4 shadow-inner [background-color:#fff] [background-image:linear-gradient(45deg,#e8eef2_25%,transparent_25%),linear-gradient(-45deg,#e8eef2_25%,transparent_25%),linear-gradient(45deg,transparent_75%,#e8eef2_75%),linear-gradient(-45deg,transparent_75%,#e8eef2_75%)]"
-            >
-              <canvas
-                id="cropCanvas"
-                class="hidden max-h-[420px] max-w-full cursor-crosshair touch-none rounded-lg border border-slate-300 bg-white shadow-xl shadow-slate-950/10"
-                aria-label="Image crop canvas"
-              ></canvas>
-              <p id="originalEmpty" class="text-center text-slate-500">No image selected.</p>
-            </div>
-          </div>
-
-          <dl id="originalMeta" class="mt-4 grid gap-2 text-sm">
-            <div class="flex justify-between gap-4 border-b border-slate-100 pb-2">
-              <dt class="font-bold text-slate-500">File size</dt>
-              <dd class="text-right font-semibold text-slate-900">--</dd>
-            </div>
-            <div class="flex justify-between gap-4 border-b border-slate-100 pb-2">
-              <dt class="font-bold text-slate-500">Dimensions</dt>
-              <dd class="text-right font-semibold text-slate-900">--</dd>
-            </div>
-            <div class="flex justify-between gap-4 border-b border-slate-100 pb-2">
-              <dt class="font-bold text-slate-500">MIME type</dt>
-              <dd class="text-right font-semibold text-slate-900">--</dd>
-            </div>
-            <div class="flex justify-between gap-4 border-b border-slate-100 pb-2">
-              <dt class="font-bold text-slate-500">Crop</dt>
-              <dd class="text-right font-semibold text-slate-900">--</dd>
-            </div>
-          </dl>
-        </section>
-
-        <section
-          class="rounded-lg border border-slate-200/80 bg-white/95 p-5 shadow-2xl shadow-slate-900/8 backdrop-blur"
-        >
-          <h2 class="mb-4 flex items-center gap-3 text-xl font-extrabold">
-            <span class="grid size-9 place-items-center rounded-lg bg-cyan-700 text-sm text-white"
-              >2</span
-            >Compress
-          </h2>
-          <div class="mb-4 grid gap-4 md:grid-cols-2">
-            <label class="grid gap-2 text-sm font-bold text-slate-500">
-              <span>Max width</span>
-              <input
-                id="maxWidth"
-                class="h-11 rounded-lg border border-slate-300 bg-white px-3 text-slate-900 shadow-sm outline-none transition focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100"
-                type="number"
-                min="16"
-                max="4096"
-                step="1"
-                value="1280"
-              />
-            </label>
-            <label class="grid gap-2 text-sm font-bold text-slate-500">
-              <span>Max height</span>
-              <input
-                id="maxHeight"
-                class="h-11 rounded-lg border border-slate-300 bg-white px-3 text-slate-900 shadow-sm outline-none transition focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100"
-                type="number"
-                min="16"
-                max="4096"
-                step="1"
-                value="1280"
-              />
-            </label>
-            <label class="grid gap-2 text-sm font-bold text-slate-500">
-              <span>Format</span>
-              <select
-                id="outputType"
-                class="h-11 rounded-lg border border-slate-300 bg-white px-3 text-slate-900 shadow-sm outline-none transition focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100"
-              >
-                <option value="image/webp">WebP</option>
-                <option value="image/jpeg">JPEG</option>
-              </select>
-            </label>
-            <label class="grid gap-2 text-sm font-bold text-slate-500">
-              <span>Quality <output id="qualityValue" for="quality">0.70</output></span>
-              <input
-                id="quality"
-                class="h-11 w-full accent-emerald-800"
-                type="range"
-                min="0.1"
-                max="1"
-                step="0.05"
-                value="0.7"
-              />
-            </label>
-          </div>
-
-          <button
-            id="compressButton"
-            class="mb-5 h-12 w-full rounded-lg bg-slate-950 px-5 font-extrabold text-white shadow-lg shadow-emerald-900/15 transition hover:-translate-y-0.5 hover:bg-emerald-800 hover:shadow-xl disabled:cursor-not-allowed disabled:opacity-55 disabled:hover:translate-y-0 disabled:hover:bg-slate-950"
-            type="button"
-            disabled
-          >
-            Compress and create viewer URL
-          </button>
-
-          <div>
-            <h3 class="mb-2 text-sm font-extrabold uppercase text-slate-500">Compressed Preview</h3>
-            <div
-              class="grid min-h-72 place-items-center overflow-hidden rounded-lg border border-slate-200 bg-[length:22px_22px] bg-[position:0_0,0_11px,11px_-11px,-11px_0] p-4 shadow-inner [background-color:#fff] [background-image:linear-gradient(45deg,#e8eef2_25%,transparent_25%),linear-gradient(-45deg,#e8eef2_25%,transparent_25%),linear-gradient(45deg,transparent_75%,#e8eef2_75%),linear-gradient(-45deg,transparent_75%,#e8eef2_75%)]"
-            >
-              <img
-                id="compressedPreview"
-                class="hidden max-h-[420px] max-w-full rounded-lg object-contain shadow-xl shadow-slate-950/10"
-                alt="Compressed output preview"
-              />
-              <p id="compressedEmpty" class="text-center text-slate-500">
-                Compressed image will appear here.
-              </p>
-            </div>
-          </div>
-
-          <dl id="compressedMeta" class="mt-4 grid gap-2 text-sm">
-            <div class="flex justify-between gap-4 border-b border-slate-100 pb-2">
-              <dt class="font-bold text-slate-500">Compressed size</dt>
-              <dd class="text-right font-semibold text-slate-900">--</dd>
-            </div>
-            <div class="flex justify-between gap-4 border-b border-slate-100 pb-2">
-              <dt class="font-bold text-slate-500">Compression ratio</dt>
-              <dd class="text-right font-semibold text-slate-900">--</dd>
-            </div>
-            <div class="flex justify-between gap-4 border-b border-slate-100 pb-2">
-              <dt class="font-bold text-slate-500">Output type</dt>
-              <dd class="text-right font-semibold text-slate-900">--</dd>
-            </div>
-          </dl>
-        </section>
+      <div class="sr-only">
+        <h1>Image Hash Share</h1>
+        <p>Crop and compress an image in your browser, then create a shareable viewer URL.</p>
       </div>
 
+      <button id="clearButton" type="button"
+        class="absolute right-5 top-5 z-10 h-11 rounded-lg border border-slate-300/80 bg-white/90 px-5 text-sm font-extrabold text-slate-800 shadow-sm transition hover:-translate-y-0.5 hover:border-slate-400 hover:bg-white hover:shadow-md">
+        Clear
+      </button>
+    </header>
+
+    <section id="message" role="status" aria-live="polite"
+      class="app-notification hidden rounded-lg border border-red-200 bg-red-50 p-4 font-bold text-red-800 shadow-sm">
+    </section>
+
+    <noscript>
+      <section class="mb-5 rounded-lg border border-slate-200 bg-white p-4 text-sm leading-6 text-slate-700 shadow-sm">
+        Image Hash Share is a browser-only image utility. Enable JavaScript to crop, compress,
+        encode, and generate shareable image URLs.
+      </section>
+    </noscript>
+
+    <div class="grid gap-5 lg:min-h-0 lg:flex-1 lg:grid-cols-2">
       <section
-        class="mt-5 rounded-lg border border-slate-200/80 bg-white/95 p-5 shadow-2xl shadow-slate-900/8 backdrop-blur"
-      >
-        <div class="mb-3 flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
-          <div>
-            <h2 class="flex items-center gap-3 text-xl font-extrabold">
-              <span
-                class="grid size-9 place-items-center rounded-lg bg-slate-950 text-sm text-white"
-                >3</span
-              >Viewer URL
-            </h2>
-            <p class="mt-2 text-slate-600">
-              The share link points to
-              <code id="viewerUrlExample" class="rounded bg-slate-100 px-1 py-0.5"></code>, where
-              only the decoded image is shown.
+        class="rounded-lg border border-slate-200/80 bg-white/95 p-5 shadow-2xl shadow-slate-900/8 backdrop-blur lg:flex lg:min-h-0 lg:flex-col lg:overflow-hidden">
+        <h2 class="mb-4 flex items-center gap-3 text-xl font-extrabold">
+          <span class="grid size-9 place-items-center rounded-lg bg-emerald-800 text-sm text-white">1</span>Upload
+        </h2>
+        <div id="dropZone">
+          <label
+            class="group flex min-h-32 w-full cursor-pointer flex-col items-center justify-center gap-2 rounded-lg border border-dashed border-emerald-300 bg-emerald-50/70 px-4 text-center font-extrabold text-emerald-900 transition hover:-translate-y-0.5 hover:border-emerald-500 hover:bg-emerald-50">
+            Click to choose a file, or drag and drop anywhere in this area.
+            <input id="fileInput" class="sr-only" type="file" accept="image/*" />
+          </label>
+        </div>
+
+        <div class="lg:flex lg:min-h-0 lg:flex-1 lg:flex-col">
+          <div class="mb-2 flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
+            <p id="cropHint" class="text-sm text-slate-500">
+              Drag a border or corner to resize; drag inside to move.
             </p>
           </div>
-          <button
-            id="copyButton"
-            class="h-11 rounded-lg border border-slate-300 bg-white px-5 font-bold shadow-sm transition hover:-translate-y-0.5 hover:border-emerald-500 hover:bg-emerald-50 hover:text-emerald-900 disabled:cursor-not-allowed disabled:opacity-55 disabled:hover:translate-y-0"
-            type="button"
-            disabled
-          >
+          <div
+            class="grid min-h-72 place-items-center overflow-hidden rounded-lg border border-slate-200 bg-[length:22px_22px] bg-[position:0_0,0_11px,11px_-11px,-11px_0] p-4 shadow-inner lg:min-h-0 lg:flex-1 [background-color:#fff] [background-image:linear-gradient(45deg,#e8eef2_25%,transparent_25%),linear-gradient(-45deg,#e8eef2_25%,transparent_25%),linear-gradient(45deg,transparent_75%,#e8eef2_75%),linear-gradient(-45deg,transparent_75%,#e8eef2_75%)]">
+            <canvas id="cropCanvas"
+              class="hidden max-h-[min(560px,calc(100dvh-8rem))] max-w-full cursor-crosshair touch-none rounded-lg border border-slate-300 bg-white shadow-xl shadow-slate-950/10 justify-self-center self-center lg:max-h-full"
+              aria-label="Image crop canvas"></canvas>
+            <p id="originalEmpty" class="text-center text-slate-500">No image selected.</p>
+          </div>
+        </div>
+
+        <dl id="originalMeta" class="mt-4 grid shrink-0 gap-2 text-sm">
+          <div class="flex justify-between gap-4 border-b border-slate-100 pb-2">
+            <dt class="font-bold text-slate-500">File size</dt>
+            <dd class="text-right font-semibold text-slate-900">--</dd>
+          </div>
+          <div class="flex justify-between gap-4 border-b border-slate-100 pb-2">
+            <dt class="font-bold text-slate-500">Dimensions</dt>
+            <dd class="text-right font-semibold text-slate-900">--</dd>
+          </div>
+          <div class="flex justify-between gap-4">
+            <dt class="font-bold text-slate-500">MIME type</dt>
+            <dd class="text-right font-semibold text-slate-900">--</dd>
+          </div>
+        </dl>
+      </section>
+
+      <section
+        class="rounded-lg border border-slate-200/80 bg-white/95 p-5 shadow-2xl shadow-slate-900/8 backdrop-blur lg:flex lg:min-h-0 lg:flex-col lg:overflow-hidden">
+        <h2 class="mb-4 flex items-center gap-3 text-xl font-extrabold">
+          <span class="grid size-9 place-items-center rounded-lg bg-cyan-700 text-sm text-white">2</span>Compress
+        </h2>
+        <div class="mb-4 grid gap-4 md:grid-cols-3 lg:shrink-0">
+          <label class="grid gap-2 text-sm font-bold text-slate-500">
+            <span>Max width</span>
+            <input id="maxWidth"
+              class="h-11 rounded-lg border border-slate-300 bg-white px-3 text-slate-900 shadow-sm outline-none transition focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100"
+              type="number" min="16" max="32767" step="1" value="1920" />
+          </label>
+          <label class="grid gap-2 text-sm font-bold text-slate-500">
+            <span>Max height</span>
+            <input id="maxHeight"
+              class="h-11 rounded-lg border border-slate-300 bg-white px-3 text-slate-900 shadow-sm outline-none transition focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100"
+              type="number" min="16" max="32767" step="1" value="1920" />
+          </label>
+          <label class="grid gap-2 text-sm font-bold text-slate-500">
+            <span>Quality <output id="qualityValue" for="quality">0.90</output></span>
+            <input id="quality" class="h-11 w-full accent-emerald-800" type="range" min="0.1" max="1" step="0.05"
+              value="0.9" />
+          </label>
+        </div>
+
+        <div class="mb-5 grid shrink-0 gap-3 sm:grid-cols-3">
+          <button id="compressButton"
+            class="h-12 w-full rounded-lg bg-slate-950 px-5 font-extrabold text-white shadow-lg shadow-emerald-900/15 transition hover:-translate-y-0.5 hover:bg-emerald-800 hover:shadow-xl disabled:cursor-not-allowed disabled:opacity-55 disabled:hover:translate-y-0 disabled:hover:bg-slate-950"
+            type="button" disabled>
+            Compress
+          </button>
+          <button id="copyButton" type="button" disabled
+            class="h-12 w-full rounded-lg border border-slate-300 bg-white px-5 font-extrabold text-slate-800 shadow-sm transition hover:-translate-y-0.5 hover:border-emerald-500 hover:bg-emerald-50 hover:text-emerald-900 disabled:cursor-not-allowed disabled:opacity-55 disabled:hover:translate-y-0">
             Copy URL
+          </button>
+          <button id="downloadButton" type="button" disabled
+            class="h-12 w-full rounded-lg border border-cyan-700 bg-cyan-700 px-5 font-extrabold text-white shadow-sm transition hover:-translate-y-0.5 hover:border-cyan-800 hover:bg-cyan-800 disabled:cursor-not-allowed disabled:opacity-55 disabled:hover:translate-y-0">
+            Download
           </button>
         </div>
 
-        <label class="mb-2 block text-sm font-bold text-slate-500" for="shareUrl">Final URL</label>
-        <textarea
-          id="shareUrl"
-          class="min-h-28 w-full resize-y rounded-lg border border-slate-300 bg-slate-50/70 p-3 font-mono text-sm leading-6 text-slate-800 shadow-inner outline-none focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100"
-          rows="4"
-          readonly
-          placeholder="Compress an image to generate a viewer-only URL."
-        ></textarea>
+        <div class="lg:flex lg:min-h-0 lg:flex-1 lg:flex-col">
+          <div
+            class="grid min-h-72 place-items-center overflow-hidden rounded-lg border border-slate-200 bg-[length:22px_22px] bg-[position:0_0,0_11px,11px_-11px,-11px_0] p-4 shadow-inner lg:min-h-0 lg:flex-1 [background-color:#fff] [background-image:linear-gradient(45deg,#e8eef2_25%,transparent_25%),linear-gradient(-45deg,#e8eef2_25%,transparent_25%),linear-gradient(45deg,transparent_75%,#e8eef2_75%),linear-gradient(-45deg,transparent_75%,#e8eef2_75%)]">
+            <img id="compressedPreview"
+              class="hidden h-full w-full min-h-0 min-w-0 max-h-full max-w-full rounded-lg object-contain justify-self-center self-center"
+              alt="Compressed output preview" />
+            <p id="compressedEmpty" class="text-center text-slate-500">
+              Compressed image will appear here.
+            </p>
+          </div>
+        </div>
 
-        <dl class="mt-3 grid gap-2 text-sm">
+        <dl id="compressedMeta" class="mt-4 grid shrink-0 gap-2 text-sm">
           <div class="flex justify-between gap-4 border-b border-slate-100 pb-2">
-            <dt class="font-bold text-slate-500">URL length</dt>
-            <dd id="urlLength" class="text-right font-semibold text-slate-900">0 characters</dd>
+            <dt class="font-bold text-slate-500">Compressed size</dt>
+            <dd class="text-right font-semibold text-slate-900">--</dd>
+          </div>
+          <div class="flex justify-between gap-4 border-b border-slate-100 pb-2">
+            <dt class="font-bold text-slate-500">Compression ratio</dt>
+            <dd class="text-right font-semibold text-slate-900">--</dd>
+          </div>
+          <div class="flex justify-between gap-4">
+            <dt class="font-bold text-slate-500">Dimensions</dt>
+            <dd class="text-right font-semibold text-slate-900">--</dd>
           </div>
         </dl>
-        <p
-          id="lengthWarning"
-          class="mt-3 hidden rounded-lg bg-amber-50 p-3 font-bold text-amber-800"
-        ></p>
       </section>
-    </main>
+    </div>
+  </main>
 
-    <script src="js/config.js"></script>
-    <script src="js/utils.js"></script>
-    <script src="js/cropper.js"></script>
-    <script src="js/generator.js"></script>
-    <script src="js/viewer.js"></script>
-    <script src="js/snow-decor.js"></script>
-    <script src="script.js"></script>
-  </body>
+  <script src="js/config.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/cropper.js"></script>
+  <script src="js/generator.js"></script>
+  <script src="js/viewer.js"></script>
+  <script src="js/snow-decor.js"></script>
+  <script src="script.js"></script>
+</body>
+
 </html>

@@ -1,58 +1,52 @@
 # Image Hash Share
 
-A small frontend-only experiment for turning a tiny image into a shareable URL hash.
+Image Hash Share is a browser-only tool for cropping and compressing an image, then creating a viewer URL that stores the image data in the URL hash. Images stay in the browser and are never uploaded.
 
-The app lets you upload, drag and drop, or paste an image, crop it with a mouse drag, resize and compress it in the browser, encode the compressed bytes as Base64URL, and generate a viewer-only URL. Opening that URL renders the image from the hash data.
+## Project structure
 
-## Files
+- `index.html` - image upload, crop, compression, preview, copy, and download UI.
+- `viewer.html` - viewer-only page that decodes and displays a shared image.
+- `script.js` - shared bootstrap that initializes the current page.
+- `js/config.js` - resolves the application URL and updates page metadata at runtime.
+- `js/utils.js` - shared image, Canvas, Base64URL, Blob, metadata, and DOM helpers.
+- `js/cropper.js` - crop canvas rendering and drag behavior.
+- `js/generator.js` - upload handling, crop output, WebP compression, fallback handling, and URL generation.
+- `js/viewer.js` - MIME-aware hash decoding and image rendering.
+- `js/snow-decor.js` - lightweight canvas decoration used by both pages.
+- `robots.txt` and `sitemap.xml` - crawler rules and sitemap metadata.
 
-- `index.html` - generator page with upload, drag and drop, clipboard paste, crop, compression, metadata, URL length warnings, and copy controls.
-- `viewer.html` - viewer-only page that decodes the URL hash and renders just the image.
-- `script.js` - tiny bootstrap file that starts the generator or viewer page.
-- `js/config.js` - shared constants such as the GitHub Pages viewer base URL.
-- `js/utils.js` - shared helpers for image loading, Base64URL, blobs, metadata, and DOM display.
-- `js/cropper.js` - crop canvas drawing and border/handle drag behavior.
-- `js/generator.js` - upload, drag/drop, paste, compression, and final URL generation.
-- `js/viewer.js` - hash decode and viewer-only image rendering.
-- `robots.txt` - search crawler rules that index the main app and avoid indexing hash viewer URLs.
-- `sitemap.xml` - sitemap entry for the public GitHub Pages app URL.
+## Run locally
 
-## Run
+No package installation or build step is required. Serve the repository with any static web server:
 
-Open `index.html` directly in a browser:
-
-```text
-mymg/index.html
+```sh
+python3 -m http.server 8000 --bind 127.0.0.1
 ```
 
-No build step, backend, package install, or local server is required.
+Then open <http://127.0.0.1:8000/>.
 
-## How It Works
+The pages can also be opened directly from the filesystem. The Tailwind Play CDN used by the UI still needs network access to load the styles.
 
-1. Select an image on `index.html`, drag and drop one into the upload area, or paste one from the clipboard with `Ctrl+V` / `Cmd+V`.
-2. The browser reads the file locally and shows basic metadata.
-3. Drag a border or corner on the original preview canvas to resize the crop. Drag inside the crop to move it.
-4. A canvas resizes the selected crop using the selected max width, max height, and quality.
-5. The canvas output is converted to a compressed `Blob`.
-6. The blob is encoded into a Base64URL string.
-7. The generated URL points to the GitHub Pages viewer with hash data:
+## How it works
 
-```text
-${APP_DOMAIN}/viewer.html#img=<encoded-data>&type=image/webp
-```
+1. Choose an image or drag it into the upload area.
+2. Move or resize the crop on the original preview.
+3. Set the maximum width, maximum height, and quality.
+4. Select `Compress`. The app draws the crop with Canvas 2D, tries WebP candidates across the resolution ladder `1920 → 1600 → 1280 → 1024 → 800 → 640 → 480`, and lowers quality in `0.05` steps when needed.
+5. A compressed candidate is accepted only when it is strictly smaller than both the source file and `300 KB`. The image is never upscaled.
+6. If no smaller WebP candidate is available and the original file is already below `300 KB`, the original file is kept. Its MIME type is preserved for the download and viewer URL.
+7. `Copy URL` creates a link in this form:
 
-8. `viewer.html` decodes the hash, creates a `Blob`, and renders the image with `URL.createObjectURL`.
+   ```text
+   <app-url>/viewer.html#img=<encoded-data>&type=<output-mime-type>
+   ```
+
+8. `viewer.html` reconstructs the image Blob from the hash and displays it.
 
 ## Limitations
 
-Embedding image bytes directly in a URL is only practical for tiny images or thumbnails.
+Image bytes embedded in a URL are practical mainly for small images or thumbnails. Long hashes may exceed limits imposed by browsers, messaging apps, or other sharing tools.
 
-Generated URLs can become too long for browsers, messaging apps, email clients, and social platforms. The app warns when the URL is over 2,000 characters and shows a stronger warning over 8,000 characters.
+The app does not use a backend or `localStorage`. The URL hash is the only place where the generated image data is stored.
 
-Images are never uploaded to a server and are not stored in `localStorage`.
-
-Drag-and-drop is handled on the page so dropped image files are loaded into the cropper instead of being opened by the browser as a new local file URL.
-
-## Notes
-
-The pages use vanilla HTML and JavaScript. Styling uses Tailwind utility classes loaded from the Tailwind CDN, so the visual styling requires network access when opening the files directly.
+`robots.txt` and `sitemap.xml` currently use the `${APP_DOMAIN}` placeholder. Replace it with the deployed site URL when publishing the static site.

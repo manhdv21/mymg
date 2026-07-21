@@ -1,13 +1,10 @@
 'use strict';
 
-(async function bootstrap() {
+(function bootstrap() {
+  window.AppConfig.applyDomainToDocument();
   window.AppSnowDecor?.init();
 
-  await window.AppConfig.loadEnv();
-  window.AppConfig.applyDomainToDocument();
-
-  const pageType = document.body.dataset.page;
-
+  const pageType = document.body?.dataset.page;
   if (pageType === 'generator') {
     window.AppGenerator.init();
   } else if (pageType === 'viewer') {
