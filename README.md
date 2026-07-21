@@ -48,5 +48,3 @@ The pages can also be opened directly from the filesystem. The Tailwind Play CDN
 Image bytes embedded in a URL are practical mainly for small images or thumbnails. Long hashes may exceed limits imposed by browsers, messaging apps, or other sharing tools.
 
 The app does not use a backend or `localStorage`. The URL hash is the only place where the generated image data is stored.
-
-`robots.txt` and `sitemap.xml` currently use the `${APP_DOMAIN}` placeholder. Replace it with the deployed site URL when publishing the static site.

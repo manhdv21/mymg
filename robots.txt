@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /viewer.html
 
-Sitemap: ${APP_DOMAIN}/sitemap.xml
+Sitemap: https://mymg.domadev.site/sitemap.xml
